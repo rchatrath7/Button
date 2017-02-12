@@ -62,7 +62,7 @@ def get_average_performance(interval, size):
         # Measure
         d1 = datetime.datetime.now()
         flatten(l)
-        d2 = dateime.dateime.now()
+        d2 = datetime.datetime.now()
 
         # Gather result
         d3 = d2 - d1
@@ -107,9 +107,9 @@ if __name__ == "__main__":
         print list(r)
         print d3.total_seconds()
 
-    # Testing speeds of sizes [100, 1000, 10000, 100000] 100 times then averaging
+    # Testing speeds of sizes [100, 1000, 10000, 100000] 50 times then averaging
     # The results
     test_sizes = [100, 1000, 10000, 100000]
-    interval = 100
+    interval = 50
 
     print test_various_sizes(interval, test_sizes)

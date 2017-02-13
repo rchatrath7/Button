@@ -1,8 +1,9 @@
 # Button Coding Challenge Documentation
 ## Rakesh Chatrath
+### 2.13.2017
 ---
 ### To run:
-```
+```sh
 # Button/
 
 python button_coding_challenge.py
@@ -25,4 +26,9 @@ All things said, the program works as follows:
     iterate over the sublist value by value, yielding non-list values
     until we hit another list.
 
-In practice 
+In practice we see the following results for speed:
+* Arrays of size 100 (arbitrary number of nests) averaged over 100 trials: 0.000498ms
+* Arrays of size 1000 (arbitrary number of nests) averaged over 100 trials: 0.000501ms
+* Arrays of size 10000 (arbitrary number of nests) averaged over 100 trials: 0.00214ms
+
+As we can see the speed of the algorithm seems to hold up even with large arrays. 

@@ -10,7 +10,7 @@ in Python, but the overhead on the function may be worse than iteration since
 there are multiple function calls.
 '''
 
-import datetime # For speed testing
+import timeit # For speed testing
 import random # For random nested array generation
 
 def flatten(arr):
@@ -52,30 +52,25 @@ def create_nested_array(level, length):
 
     return nested_array
 
-# Helper function for getting average speed
-def get_average_performance(interval, size):
-    count = 0
-    for i in xrange(interval):
-        # Create nested array of up to 10 nests of length size
-        l = create_nested_array(random.randint(0,10), size)
+# Helper function for getting the fastest speed
+def get_performance(interval, size):
+    print "Testing performance of size: {}".format(size)
+    # Create nested array of up to 10 nests of length size
+    l = create_nested_array(random.randint(0,10), size)
 
-        # Measure
-        d1 = datetime.datetime.now()
+    def wrap():
         flatten(l)
-        d2 = datetime.datetime.now()
 
-        # Gather result
-        d3 = d2 - d1
-        count += d3.total_seconds()
+    t = timeit.Timer(wrap)
 
-    return count / float(interval)
+    return min(t.repeat(3, interval)) / interval
 
 # Function to test sizes
 def test_various_sizes(interval, sizes):
     results = {}
 
     for size in sizes:
-        avg = get_average_performance(interval, size)
+        avg = get_performance(interval, size)
         results[size] = avg
 
     return results
@@ -92,24 +87,23 @@ if __name__ == "__main__":
     [3]], 60, 32l, 41, "z", [[[[[[[[[[[[[[[[[[[[[[[[[[0]]]]]]]]]]]]]]]]]]]]]]]]]],
     14, 32, 90, 3, [[None, 4], 64],[8]])))
 
-    # Speed Tests ONLY: Uncomment to run own speed tests
+    # # Speed Tests ONLY: Uncomment to run own speed tests
+    #
+    # # 5 general speed tests to test accuracy
+    # for i in xrange(5):
+    #     l = create_nested_array(random.randint(0, 10), random.randint(0, 50))
+    #
+    #     d1 = datetime.datetime.now()
+    #     r = flatten(l)
+    #     d2 = datetime.datetime.now()
+    #
+    #     d3 = d2 - d1
+    #
+    #     print list(r)
+    #     print d3.total_seconds()
 
-    # 5 general speed tests to test accuracy
-    for i in xrange(5):
-        l = create_nested_array(random.randint(0, 10), random.randint(0, 50))
+    # Testing speeds of sizes [100, 1000, 10000] 100 times
+    # test_sizes = [100, 1000, 10000]
+    # interval = 100
 
-        d1 = datetime.datetime.now()
-        r = flatten(l)
-        d2 = datetime.datetime.now()
-
-        d3 = d2 - d1
-
-        print list(r)
-        print d3.total_seconds()
-
-    # Testing speeds of sizes [100, 1000, 10000, 100000] 50 times then averaging
-    # The results
-    test_sizes = [100, 1000, 10000, 100000]
-    interval = 50
-
-    print test_various_sizes(interval, test_sizes)
+    # print test_various_sizes(interval, test_sizes)
